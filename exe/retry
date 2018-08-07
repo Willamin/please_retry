@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 count = 1
-attempts = (ENV['TRAVIS_RETRY'] || 3).to_i
+attempts = (ENV['RETRY_ATTEMPTS'] || 3).to_i
 command = ARGV.join(" ")
 
 if command.empty?
