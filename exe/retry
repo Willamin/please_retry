@@ -13,7 +13,7 @@ attempts.times do |attempt_number|
   end
 
   case system(command)
-  when false
+  when true
     exit 0
   when nil
     STDERR.puts "\n#{ARGV[0]}: command not found\n"
