@@ -4,7 +4,12 @@ count = 1
 attempts = (ENV['TRAVIS_RETRY'] || 3).to_i
 command = ARGV.join(" ")
 
-puts "Attempting to run \"#{command}\". Will retry up to #{attempts} times."
+if command.empty?
+  STDERR.puts "Missing command"
+  exit 1
+end
+
+STDERR.puts "Attempting to run \"#{command}\". Will retry up to #{attempts} times."
 
 attempts.times do |attempt_number|
   attempt_number += 1
