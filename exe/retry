@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+count = 1
+attempts = (ENV['TRAVIS_RETRY'] || 3).to_i
+command = ARGV.join(" ")
+
+puts "Attempting to run \"#{command}\". Will retry up to #{attempts} times."
+
+attempts.times do |attempt_number|
+  attempt_number += 1
+  if attempt_number != 1
+    STDERR.puts "\nThe command \"#{command}\" failed. Retrying, #{attempt_number} of #{attempts}.\n"
+  end
+
+  case system(command)
+  when false
+    exit 0
+  when nil
+    STDERR.puts "\n#{ARGV[0]}: command not found\n"
+  end
+
+  sleep 1
+end
+
+STDERR.puts "\nThe command \"#{command}\" failed #{attempts} times.\n\n"
+exit 1
